@@ -40,11 +40,12 @@ const [speedcal, setSpeedcal] = useState("")
                 console.log("update", data)
             }
 
-            if(speed <200){
-                setSpeedcal(" You may want to chooose a different crewmate this one is kind of slow")
+            if(data.speed > 200){
+                setSpeedcal("This is an excellent choice with an amazing speed!!")
+                
             }
             else{
-                setSpeedcal("This is an excellent choice with an amazing speed!!")
+                setSpeedcal(" You may want to chooose a different crewmate this one is kind of slow")
            
             }
         }

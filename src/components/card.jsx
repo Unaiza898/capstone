@@ -4,8 +4,27 @@ import white from "../assets/white.png";
 import black from "../assets/black.png";
 import blue from "../assets/blue.png";
 import red from "../assets/red.png";
-const Card = ({ crewmate }) => (
-  <div className="card">
+import supabase from "../config/client";
+import { useNavigate } from "react-router-dom";
+const Card = ({ crewmate }) => {
+  const navigate = useNavigate()
+  const deletePost = async (event) => {
+    event.preventDefault();
+    await supabase
+    .from('amongus')
+    .delete()
+    .eq('id', crewmate.id); 
+    navigate('/')
+    .then(()=>{
+      window.location.reload();
+    })
+   
+
+}
+
+
+  return(
+    <div className="card">
     {crewmate.color == "white" ? (
       <div>
         <img width="150px" height="100px" src={white} />
@@ -30,7 +49,7 @@ const Card = ({ crewmate }) => (
     {crewmate.color == "black" ? (
       <div>
         {" "}
-        <img width="150px" height="100px" src={black} />{" "}
+        <img width="100px" height="100px" src={black} />{" "}
       </div>
     ) : (
       ""
@@ -41,9 +60,16 @@ const Card = ({ crewmate }) => (
     <p> Color: {crewmate.color}</p>
     <Link className="buttons" to={"/" + crewmate.id}>Edit</Link>
        <span> </span>
-
     <Link className="buttons" to={"/gallery/" + crewmate.id}>View</Link>
+<div>
+ <button onClick={deletePost}> Delete</button> 
+</div>
+
   </div>
-);
+  )
+ 
+}
+
+
 
 export default Card;
