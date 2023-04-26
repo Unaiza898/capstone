@@ -15,7 +15,7 @@ const SideNav = () => (
     
    
     <Link to= '/create'>
-   <div className='nav'>Create</div> 
+   <div className='nav'>Create post</div> 
     
    </Link>
     <div className='nav'><a> Search</a></div> 
