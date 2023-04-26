@@ -18,13 +18,23 @@
   box-sizing: border-box;
   border-radius: 6px;
   position: relative;
+  margin: 20px;
 }
 
+.comments{
+height: 50px;
+width: 500px;
+color: black;
+background-color: white;
+opacity: 40%;
+}
 .read-the-docs {
   color: #888;
 }
 
-
+.info{
+color:black;
+}
 
 /* crewmates-grid */
 .crewmates-grid {

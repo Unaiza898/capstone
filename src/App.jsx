@@ -38,12 +38,13 @@ function App() {
   const searchItems = async(inputString, columns) => {
     console.log();
     setSearchInput(inputString);
-
   
     if (columns == "title") {
       const { data, error } =
       await supabase.from('post').select().textSearch('title', `${inputString}`)
        console.log(data)
+
+       setFilteredResults(data)
     }
   };
 
@@ -62,7 +63,7 @@ function App() {
     if(e.target.id == "sdate"){
       const { data, error } = await supabase.from('post')
       .select()
-      .order('id',  { ascending: false });
+      .order('created_at',  { ascending: false });
     console.log(data)
     setPost(data)
     }
@@ -94,22 +95,23 @@ function App() {
           />
 
           <div className="crewmates-grid">
+
             {searchInput.length > 0 ? (
               filteredResults.map((data) => (
-                <ul>
+                <>
                   {post.map((data) => (
                     <Card key={post.id} post={post} />
                   ))}
 
                   {console.log(filteredResults)}
-                </ul>
+                  </>
               ))
             ) : (
-              <ul>
+              <>
                 {post.map((post) => (
                   <Card key={post.id} post={post} />
                 ))}
-              </ul>
+              </>
             )}
           </div>
         </div>

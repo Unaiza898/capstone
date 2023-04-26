@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-
+import SideNav from "../components/sidenav";
 import supabase from "../config/client";
 const Update = () => {
     const {id} = useParams()

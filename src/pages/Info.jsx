@@ -1,6 +1,5 @@
-
-import { useEffect,useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Outlet, Link } from "react-router-dom";
 import SideNav from "../components/sidenav";
 import supabase from "../config/client";
@@ -10,96 +9,128 @@ import blue from "../assets/blue.png";
 import red from "../assets/red.png";
 
 const Info = () => {
-    const [name, setName] = useState("");
-const [speed, setSpeed] = useState("");
-const [color, setColor] = useState("");
-    const {id} = useParams()
-    const navigate = useNavigate();
-const [speedcal, setSpeedcal] = useState("")
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [commentsect, setCommentsect] = useState([]);
+  const [comments, setComment] = useState([]);
+  const { id } = useParams();
+  const [value, setValue] = useState("");
+  const navigate = useNavigate();
+  const [formError, setformError] = useState("");
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    console.log(value);
 
+    const { data, error } = await supabase
+      .from("post")
+      .update({ comments: [...comments, value] })
+      .eq('id', id)
+      
+      ;
 
+    if (error) {
+      console.log(error);
+    }
+    if (data) {
+      console.log(data);
+      setformError(null);
+    }
+    if (!error) {
+      navigate("/");
+    }
+  };
 
-    useEffect(()=> {
-        const fetchcrewmate = async () =>{
-            const{data, error} = 
-            await supabase
-            .from('amongus')
-            .select()
-            .eq('id',id)
-            .single()
+  useEffect(() => {
+    const fetchcrewmate = async () => {
+      const { data, error } = await supabase
+        .from("post")
+        .select()
+        .eq("id", id)
+        .single();
 
-            if(error){
-                // navigate('/', {replace : true})
-            }
-            if(data){
-                setName(data.name)
-                setSpeed(data.speed)
-                setColor(data.color)
-                console.log("update", data)
-            }
+      if (error) {
+        // navigate('/', {replace : true})
+      }
+      if (data) {
+        setTitle(data.title);
+        setImage(data.image);
+        setDescription(data.description);
+        setComment(data.comments);
+        console.log("update", data);
+      }
+    };
+    fetchcrewmate();
+  }, [id]);
+  return (
+    <div>
+      <SideNav />
+      <div className="row container">
+        <div class="column">
+          <h4> Name</h4>
+          <h4> description</h4>
+        </div>
+        <div class="column">
+          <p className="label">{title}</p>
+          <p className="label">{description} mph</p>
+        </div>
+        comments section
+        <div></div>
+      </div>
+      comments section
+      {comments ? (
 
-            if(data.speed > 200){
-                setSpeedcal("This is an excellent choice with an amazing speed!!")
-                
-            }
-            else{
-                setSpeedcal(" You may want to chooose a different crewmate this one is kind of slow")
-           
-            }
-        }
-        fetchcrewmate()
-    },[id]  )
-return (
-    <div >
-        <SideNav/>
+        <>
+    {    comments.map((data) => (
+          <>
+            <div className="comments">
+           {console.log("Data", data)}
+             
+            { data}
+            </div>
+          </>
+        ))}
+        <form onSubmit={handleSubmit}>
+                <div>
+                  <label> comment below </label>
+                  <input
+                    type="text"
+                    id="comment"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                  />
+                </div>
 
-        {color == "white"?
-        <div>
-         <img width="250px" height="300px" src={white}/>
-         </div> :""
-        }
-         {color == "red"?
-         <div>
-         <img width="250px" height="300px" src={red}/>
-         </div> : ""
-        }
-               {color == "blue"?
-               <div>
-         <img width="250px" height="300px"  src={blue}/> </div>: ""
-        }
-             {color == "black"?
-      <div>   <img width="250px" height="300px"  src={black}/> </div>: ""
-        }
-     
-        <div class="row container">
-  <div class="column">
-  <h4 > Name</h4>
-  <h4 > Speed</h4>
-  <h4> Color</h4>
-  </div>
-  <div class="column">
+                <button> Submit</button>
+                {formError && <p className="error"> {formError}</p>}
+              </form>
+        </>
+      ) : (
+        <>
+          {/* {post.map((post) => (
+                  <Card key={post.id} post={post} />
+                ))} */}
+          <div>no comment be the first to comment</div>
+          <form onSubmit={handleSubmit}>
+                <div>
+                  <label> comment below </label>
+                  <input
+                    type="text"
+                    id="comment"
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                  />
+                </div>
 
-  <p className="label">{name}</p>
-  <p className="label">{speed} mph</p>
-  <p className="label">{color}</p>
-
-  </div>
-
-
-</div>
-<div className="speed">
-   {speedcal}
-  </div>
-
-<Link className="info" to = {'/' + id}>
-Wanna edit this crewmate
-</Link>
-
+                <button> Submit</button>
+                {formError && <p className="error"> {formError}</p>}
+              </form>
+        </>
+      )}
     </div>
-)
+  );
+};
 
-}
-
-export default Info
+export default Info;
