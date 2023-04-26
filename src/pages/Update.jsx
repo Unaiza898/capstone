@@ -5,21 +5,22 @@ import supabase from "../config/client";
 const Update = () => {
     const {id} = useParams()
 const navigate = useNavigate();
-const [name, setName] = useState("");
-const [speed, setSpeed] = useState("");
-const [color, setColor] = useState("");
+const [title, setTitle] = useState("");
+const [description, setDescription] = useState("");
+const [image,setImage] = useState("")
 const [formError, setformError] = useState("");
+
 
 const handleSubmit   = async (e) =>{
 e.preventDefault();
 
-if(!name ||!color || !speed ){
+if(!title || !description){
     setformError('Please fill in all the fields correctly')
 
   }
   const {data,error} = await supabase
-  .from('amongus')
-  .update({name,color,speed})
+  .from('post')
+  .update({title,description,image})
   .eq('id',id)
 
   if(error){
@@ -41,10 +42,10 @@ if(!name ||!color || !speed ){
 
 }
     useEffect(()=> {
-        const fetchcrewmate = async () =>{
+        const fetch = async () =>{
             const{data, error} = 
             await supabase
-            .from('amongus')
+            .from('post')
             .select()
             .eq('id',id)
             .single()
@@ -53,57 +54,60 @@ if(!name ||!color || !speed ){
                 navigate('/', {replace : true})
             }
             if(data){
-                setName(data.name)
-                setSpeed(data.speed)
-                setColor(data.color)
+                setTitle(data.title)
+                setDescription(data.description)
+                setImage(data.image)
                 console.log("update", data)
             }
         }
-        fetchcrewmate()
+        fetch()
     },[id,navigate]  )
     return (
         <div className=" Page update">
             <h2> Update - {id}</h2>
 
+            <div className=" page create">
+      <SideNav/>
+      <h2> Create a Post</h2>
 
-            <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
-        <label > Name </label>
+        <label > Title </label>
         <input
           type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         </div>
     
     <div>
-    <label > Speed </label>
+    <label > description </label>
         <input
           type="text"
-          id="speed"
-          value={speed}
-          onChange={(e) => setSpeed(e.target.value)}
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
     </div>
      
      <div>
-     <label >Choose a color:</label>
-               {color} 
-        <select id="color" name="color"
-         onChange={e => setColor(e.target.value)}
-        >
-          <option >Please select of the options</option>
-          <option value="red">red</option>
-          <option value="blue">blue</option>
-          <option value="white">white</option>
-          <option value="black">black</option>
-        </select>
+     <label >Image url:</label>
+     <input
+          type="text"
+          id="image"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+        />
      </div>
-    <button> Update Crewmate</button>
+    <button> Update</button>
     {formError && <p className="error"> {formError}</p>}
       </form >
-        </div>
+    </div>
+
+
+
+</div>
     )
 }
 

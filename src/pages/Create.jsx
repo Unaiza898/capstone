@@ -4,9 +4,9 @@ import SideNav from "../components/sidenav";
 import { useNavigate } from "react-router-dom";
 
 const Create = () => {
-  const [name, setName] = useState("");
-  const [speed, setSpeed] = useState("");
-  const [color, setColor] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image,setImage] = useState("")
   const [formError, setformError] = useState("");
 
   const navigate = useNavigate()
@@ -16,16 +16,16 @@ const Create = () => {
 
     e.preventDefault()
 
-    if(!name ||!color || !speed ){
+    if(!title ||!description ){
       setformError('Please fill in all the fields correctly')
   
     }
    
-    console.log(speed,color,name)
+    console.log(title, description, image)
 
     const {data, error} = await supabase
-    .from('amongus')
-    .insert([{name,speed, color}])
+    .from('post')
+    .insert([{title, description, image}])
 
     if(error){
       console.log(error)
@@ -43,42 +43,39 @@ const Create = () => {
   return (
     <div className=" page create">
       <SideNav/>
-      <h2> Create a Crewmate</h2>
+      <h2> Create a Post</h2>
 
       <form onSubmit={handleSubmit}>
         <div>
-        <label > Name </label>
+        <label > Title </label>
         <input
           type="text"
-          id="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         </div>
     
     <div>
-    <label > Speed </label>
+    <label > description </label>
         <input
           type="text"
-          id="speed"
-          value={speed}
-          onChange={(e) => setSpeed(e.target.value)}
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
     </div>
      
      <div>
-     <label >Choose a color:</label>
-        <select id="color" name="color"
-         onChange={e => setColor(e.target.value)}
-        >
-          <option defaultChecked>Please select of the options</option>
-          <option value="red">red</option>
-          <option value="blue">blue</option>
-          <option value="white">white</option>
-          <option value="black">black</option>
-        </select>
+     <label >Image url:</label>
+     <input
+          type="text"
+          id="image"
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+        />
      </div>
-    <button> Create Crewmate</button>
+    <button> Create Post</button>
     {formError && <p className="error"> {formError}</p>}
       </form >
     </div>

@@ -8,10 +8,10 @@ const SideNav = () => (
     
    </Link>
     
-   <Link to= '/gallery'>
+   {/* <Link to= '/gallery'>
    <div className='nav'> Gallery</div> 
     
-   </Link>
+   </Link> */}
     
    
     <Link to= '/create'>

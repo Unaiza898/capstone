@@ -10,28 +10,28 @@ const Gallery = () => {
   const [fetchError, setFetchedError] = useState(null)
   const [crewmate, setCrewmate]  = useState(null)
 
-  useEffect(()=> {
+//   useEffect(()=> {
 
-    const fetchcrew = async () => {
+//     const fetchcrew = async () => {
 
-      const{ data , error} = await supabase
-      .from('amongus')
-      .select()
+//       const{ data , error} = await supabase
+//       .from('amongus')
+//       .select()
 
-      if(error){
-        setFetchedError('could not fetch the srewmates')
-        setCrewmate(null)
-        console.log(error)
-      }
-      if(data){
-        setCrewmate(data)
-        setFetchedError(null)
-      }
-    }
-fetchcrew()
+//       if(error){
+//         setFetchedError('could not fetch the srewmates')
+//         setCrewmate(null)
+//         console.log(error)
+//       }
+//       if(data){
+//         setCrewmate(data)
+//         setFetchedError(null)
+//       }
+//     }
+// fetchcrew()
 
-  },[])
-  console.log(crewmate)
+//   },[])
+
     return (
      
       <div>
@@ -39,8 +39,8 @@ fetchcrew()
 
    {fetchError && (<p>{fetchError}</p>)}
 
-   {crewmate &&(
-    <div className="crewmates">
+   {/* {crewmate &&( */}
+    {/* <div className="crewmates">
    
             <div className="crewmates-grid">
         {crewmate.map(crewmate => (
@@ -48,8 +48,8 @@ fetchcrew()
            <Card key={crewmate.id} crewmate={crewmate}/>
         ))}
         </div>
-        </div>
-   )}
+        </div> */}
+   {/* )} */}
 
       </div>
     );

@@ -12,11 +12,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         
 <BrowserRouter>
     <Routes>
-    <Route path="/gallery" element={<Gallery/>}/>
+    {/* <Route path="/gallery" element={<Gallery/>}/> */}
     <Route index={true}  element={<App />} />
     <Route path="/create" element={<Create/>}/>
     <Route path="/:id" element={<Update/>}/>
-    <Route path="/gallery/:id" element={<Info/>}/>
+    {/* <Route path="/gallery/:id" element={<Info/>}/> */}
     {/* <Route index={false} path="/coinDetails/:symbol" element={<DetailView />} /> */}
     </Routes>
 
