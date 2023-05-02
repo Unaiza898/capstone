@@ -62,9 +62,11 @@ html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+ 
+}
+.homepage{
   overflow: hidden; /* Hide scrollbars */
 }
-
 .inputField{
   margin-bottom: 10px;
 }

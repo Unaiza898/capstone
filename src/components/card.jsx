@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import supabase from "../config/client";
 import { useNavigate } from "react-router-dom";
 const Card = ({ post }) => {
+
+  const[disabled, setDisbled] = useState(false);
   const navigate = useNavigate()
   const deletePost = async (event) => {
     event.preventDefault();
@@ -11,7 +13,7 @@ const Card = ({ post }) => {
     .from('post')
     .delete()
     .eq('id', post.id); 
-    navigate('/')
+    navigate('/gallery')
     .then(()=>{
       window.location.reload();
     })
@@ -25,11 +27,14 @@ const likePost =  async (event) => {
   .from('post')  
   .update({ like: post.like+1 })
   .eq('id', post.id);
-  navigate('/')
-  .then(()=>{
-    window.location.reload();
-  })
-  
+  // .then(()=>{
+  //   window.location.reload();
+  // })
+
+  setDisbled(true);
+  navigate("/gallery")
+  // document.getElementById('like').setAttribute('disabled') = 'disabled';
+  // // window.location.reload();
 }
 
 
@@ -50,11 +55,11 @@ const likePost =  async (event) => {
        <span> </span>
     {/* <Link className="buttons" to={"/gallery/" + crewmate.id}>View</Link> */}
 <div>
- <button onClick={deletePost}> Delete</button> 
- <button onClick={likePost}> Like</button> 
-
+ <button id="delete" onClick={deletePost} disabled={disabled} > Delete</button> 
+ <button id = "like" onClick={likePost}disabled= {disabled} > Like</button> 
+{console.log(disabled)}
  <Link className="info" to = {'/' + post.id}>
-Wanna edit this crewmate
+Wanna edit this post
 </Link>
 </div>
 

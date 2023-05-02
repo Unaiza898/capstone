@@ -7,9 +7,22 @@ import Card from "../components/card";
 const Gallery = () => {
 
     
-  const [fetchError, setFetchedError] = useState(null)
-  const [crewmate, setCrewmate]  = useState(null)
+  // const [fetchError, setFetchedError] = useState(null)
+  // const [crewmate, setCrewmate]  = useState(null)
 
+  const [count, setCount] = useState(0);
+  const [fetchError, setFetchedError] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [sortPostbyid,setSortbyid] = useState(true);
+  const [sortPostbydate,setSortbydate] = useState(true);
+  const ACCESS_KEY = import.meta.env.VITE_APP_SUPABASE_URL;
+  const key = import.meta.env;
+  const [post, setPost] = useState("");
+
+  const [loading, setLoading] = useState(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   useEffect(() => {
     const fetchpost = async () => {

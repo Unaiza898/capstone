@@ -3,10 +3,9 @@ import { Outlet, Link } from "react-router-dom";
 const SideNav = () => (
 
 <div className="sidenav">
-    <h2> Home</h2>
+   
    <Link to= '/'>
-   <div className='nav'>Home</div> 
-    
+   <h2> Home</h2>
    </Link>
     
    <Link to= '/gallery'>
@@ -19,8 +18,7 @@ const SideNav = () => (
    <div className='nav'>Create post</div> 
     
    </Link>
-    <div className='nav'><a> Search</a></div> 
-    <div className='nav'><a> Info</a></div> 
+
   </div>
 
 );

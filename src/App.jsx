@@ -101,7 +101,7 @@ function App() {
   };
   
   return (
-    <div className="App">
+    <div className="App homepage">
       {/* <SideNav />
      */}
       <h1> Art Forum </h1>

@@ -22,11 +22,15 @@
 }
 
 .comments{
-height: 50px;
-width: 500px;
+height: auto;
+padding: 10px;
+width: 450px;
+margin-left: 50px;
+margin-bottom: 5px;
 color: black;
 background-color: white;
-opacity: 40%;
+
+opacity: 70%;
 }
 .read-the-docs {
   color: #888;
@@ -46,7 +50,10 @@ color:black;
 }
 
 
+#comment{
 
+  width: 200 !important;
+}
 .container{
   background-color: aliceblue;
   color:black;

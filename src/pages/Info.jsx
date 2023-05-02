@@ -23,6 +23,7 @@ const Info = () => {
     e.preventDefault();
 
     console.log(value);
+ 
 
     const { data, error } = await supabase
       .from("post")
@@ -39,7 +40,9 @@ const Info = () => {
       setformError(null);
     }
     if (!error) {
-      navigate("/");
+      // navigate(`/gallery/${id}`);
+      window.location.reload();
+    
     }
   };
 
@@ -95,13 +98,14 @@ const Info = () => {
         <form onSubmit={handleSubmit}>
                 <div>
                   <label> comment below </label>
-                  <input
-                    type="text"
+           
+<textarea   type="text"
                     id="comment"
                     value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                  />
+                    onChange={(e) => setValue(e.target.value)}>Enter text here...</textarea>
+
                 </div>
+
 
                 <button> Submit</button>
                 {formError && <p className="error"> {formError}</p>}
