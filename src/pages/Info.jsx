@@ -23,31 +23,52 @@ const Info = () => {
     e.preventDefault();
 
     console.log(value);
- 
 
-    const { data, error } = await supabase
+    if (comments){
+      const { data, error } = await supabase
       .from("post")
       .update({ comments: [...comments, value] })
       .eq('id', id)
       
       ;
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        console.log(data);
+        setformError(null);
+      }
+      if (!error) {
+        // navigate(`/gallery/${id}`);
+        window.location.reload();
+      
+      }
+    }
+    else{
+      const { data, error } = await supabase
+      .from("post")
+      .insert({ comments: value  })
+      .eq('id', id)
+      if (error) {
+        console.log(error);
+      }
+      if (data) {
+        console.log(data);
+        setformError(null);
+      }
+      if (!error) {
+        // navigate(`/gallery/${id}`);
+        window.location.reload();
+      
+      }
+    }
+   
 
-    if (error) {
-      console.log(error);
-    }
-    if (data) {
-      console.log(data);
-      setformError(null);
-    }
-    if (!error) {
-      // navigate(`/gallery/${id}`);
-      window.location.reload();
-    
-    }
+
   };
 
   useEffect(() => {
-    const fetchcrewmate = async () => {
+    const fetch= async () => {
       const { data, error } = await supabase
         .from("post")
         .select()
@@ -65,19 +86,21 @@ const Info = () => {
         console.log("update", data);
       }
     };
-    fetchcrewmate();
+    fetch();
   }, [id]);
   return (
     <div>
-   
+         { image ?  (<> <img className = "pimage"  src={image}/> </>) : ( <></>)}
+    
       <div className="row container">
+
         <div class="column">
           <h4> Name</h4>
           <h4> description</h4>
         </div>
         <div class="column">
           <p className="label">{title}</p>
-          <p className="label">{description} mph</p>
+          <p className="label">{description} </p>
         </div>
         comments section
         <div></div>

@@ -48,6 +48,8 @@ const likePost =  async (event) => {
     <h3> {post.title}</h3>
     <p> description: {post.description}</p>
     <p> created at: {post.created_at}</p>
+    { post.image ?  (<> <img width = "50px" height = "50px" src={post.image}/> </>) : ( <></>)}
+    
     <p> Likes: {post.like}</p>
     {console.log(post.comment)}
     </Link>

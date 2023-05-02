@@ -41,7 +41,7 @@ const Create = () => {
    
   }
   return (
-    <div className=" page create">
+    <div className=" App page create">
   
       <h2> Create a Post</h2>
 
