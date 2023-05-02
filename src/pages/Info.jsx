@@ -66,7 +66,7 @@ const Info = () => {
   }, [id]);
   return (
     <div>
-      <SideNav />
+   
       <div className="row container">
         <div class="column">
           <h4> Name</h4>

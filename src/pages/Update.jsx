@@ -67,7 +67,7 @@ if(!title || !description){
             <h2> Update - {id}</h2>
 
             <div className=" page create">
-      <SideNav/>
+   
       <h2> Create a Post</h2>
 
       <form onSubmit={handleSubmit}>

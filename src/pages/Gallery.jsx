@@ -10,47 +10,102 @@ const Gallery = () => {
   const [fetchError, setFetchedError] = useState(null)
   const [crewmate, setCrewmate]  = useState(null)
 
-//   useEffect(()=> {
 
-//     const fetchcrew = async () => {
+  useEffect(() => {
+    const fetchpost = async () => {
+      const { data, error } = await supabase.from("post").select();
 
-//       const{ data , error} = await supabase
-//       .from('amongus')
-//       .select()
+      if (error) {
+        setFetchedError("could not fetch the srewmates");
+        setPost(null);
+        console.log(error);
+      }
+      if (data) {
+        setPost(data);
+        setFetchedError(null);
+      }
+    };
+    fetchpost();
+  }, []);
 
-//       if(error){
-//         setFetchedError('could not fetch the srewmates')
-//         setCrewmate(null)
-//         console.log(error)
-//       }
-//       if(data){
-//         setCrewmate(data)
-//         setFetchedError(null)
-//       }
-//     }
-// fetchcrew()
+  const searchItems = async(inputString, columns) => {
+    console.log();
+    setSearchInput(inputString);
+  
+    if (columns == "title") {
+      const { data, error } =
+      await supabase.from('post').select().textSearch('title', `${inputString}`)
+       console.log(data)
 
-//   },[])
+       setFilteredResults(data)
+    }
+  };
+  const sortPost= async(e) => {
+    console.log(e.target.id);
 
+    if(e.target.id == "sid"){
+      const { data, error } = await supabase.from('post')
+      .select()
+      .order('id',  { ascending: false });
+    console.log(data)
+    setPost(data)
+    }
+
+    if(e.target.id == "sdate"){
+      const { data, error } = await supabase.from('post')
+      .select()
+      .order('created_at',  { ascending: false });
+    console.log(data)
+    setPost(data)
+    }
+    // setSearchInput(inputString);
+    // await supabase.from('post').select().textSearch('title', `${inputString}`)
+    // console.log(data)
+  
+  
+  };
     return (
      
       <div>
-    <SideNav/>
+
 
    {fetchError && (<p>{fetchError}</p>)}
 
-   {/* {crewmate &&( */}
-    {/* <div className="crewmates">
-   
-            <div className="crewmates-grid">
-        {crewmate.map(crewmate => (
-      
-           <Card key={crewmate.id} crewmate={crewmate}/>
-        ))}
-        </div>
-        </div> */}
-   {/* )} */}
 
+      <button id= "sid" onClick={sortPost}> Sort by id </button>
+          <button id = "sdate" onClick={sortPost}> Sort by date </button>
+      {post && (
+        <div className="crewmates">
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={(inputString) =>
+              searchItems(inputString.target.value, "title")
+            }
+          />
+
+          <div className="crewmates-grid">
+
+            {searchInput.length > 0 ? (
+              filteredResults.map((data) => (
+                <>
+                  {post.map((data) => (
+                    <Card key={post.id} post={post} />
+                  ))}
+
+                  {console.log(filteredResults)}
+                  </>
+              ))
+            ) : (
+              <>
+                {post.map((post) => (
+                  <Card key={post.id} post={post} />
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+      )}
       </div>
     );
   };

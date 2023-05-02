@@ -1,6 +1,6 @@
 import { useState } from "react";
 import supabase from "../config/client";
-import SideNav from "../components/sidenav";
+
 import { useNavigate } from "react-router-dom";
 
 const Create = () => {
@@ -42,7 +42,7 @@ const Create = () => {
   }
   return (
     <div className=" page create">
-      <SideNav/>
+  
       <h2> Create a Post</h2>
 
       <form onSubmit={handleSubmit}>
